@@ -21,7 +21,7 @@ packages = [{include = "gettake"}]
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/eggplants/gettake"
-version = "0.1.0"
+version = "0.1.1"
 
 [tool.poetry.dependencies]
 python = ">=3.9,<4"
@@ -41,7 +41,6 @@ types-requests = "^2.31.0.20240406"
 gettake = "gettake.main:main"
 
 [tool.black]
-line-length = 120
 target-version = ['py39']
 
 [tool.mypy]
@@ -57,10 +56,6 @@ typeCheckingMode = "strict"
 [tool.lint.ruff]
 select = ["ALL"]
 ignore = ["D", "ANN101"]
-line-length = 120
-
-[tool.lint.ruff.mccabe]
-max-complexity = 18
 
 [tool.lint.ruff.per-file-ignores]
 "main.py" = [

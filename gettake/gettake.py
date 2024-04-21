@@ -104,8 +104,12 @@ def get_images(opt: Option) -> None:
         chapters_len = len(chapters)
         print(f"[+] {chapters_len:04} chapter(s) found!")  # noqa: T201
         for idx, chapter in enumerate(chapters):
-            print(f"[-] {idx + 1:04} / {chapters_len:04}...", end="", flush=True)  # noqa: T201
-            print("..saved!" if __get_pages(opt, chapter, session) else "skipped!")  # noqa: T201
+            print(
+                f"[-] {idx + 1:04} / {chapters_len:04}...", end="", flush=True
+            )  # noqa: T201
+            print(
+                "..saved!" if __get_pages(opt, chapter, session) else "skipped!"
+            )  # noqa: T201
 
 
 __all__ = ("get_images",)

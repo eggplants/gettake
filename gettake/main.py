@@ -20,7 +20,9 @@ if TYPE_CHECKING:
 VALID_HOSTS = ("webcomicgamma.takeshobo.co.jp",)
 
 
-class CustomFormatter(argparse.ArgumentDefaultsHelpFormatter, argparse.RawDescriptionHelpFormatter):
+class CustomFormatter(
+    argparse.ArgumentDefaultsHelpFormatter, argparse.RawDescriptionHelpFormatter
+):
     pass
 
 
