@@ -1,0 +1,53 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import TYPE_CHECKING, TypedDict, Literal
+
+if TYPE_CHECKING:
+    from pathlib import Path
+    from urllib.parse import ParseResult
+
+
+@dataclass
+class Option:
+    url: ParseResult
+    save_dir: Path
+    overwrite: bool
+
+    def get_file_url(self, chapter: str) -> str:
+        file_url = self.url._replace(
+            path="/_files/" + self.get_slug() + f"/{chapter}/data",
+        )
+        return file_url.geturl()
+
+    def get_slug(self) -> str:
+        return self.url.path.rstrip("/").split("/")[-1]
+
+
+class ImageInfo(TypedDict):
+    src: str
+    width: int
+    height: int
+
+
+class Resources(TypedDict):
+    i: ImageInfo
+
+
+class View(TypedDict):
+    width: int
+    height: int
+    coords: list[str]
+
+
+PositionOfImage = TypedDict(
+    "PositionOfImage",
+    {
+        "ptimg-version": Literal[1],
+        "resources": Resources,
+        "views": list[View],
+    },
+)
+
+
+__all__ = ("Option", "PositionOfImage")

@@ -1,0 +1,77 @@
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = [
+  "poetry-core",
+]
+
+[tool]
+[tool.poetry]
+authors = ["eggplants <w10776e8w@yahoo.co.jp>"]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: Implementation :: CPython",
+]
+description = "Get and save images from webcomicgamma"
+keywords = ["downloader", "cli", "manga"]
+name = "gettake"
+packages = [{include = "gettake"}]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/eggplants/gettake"
+version = "0.1.0"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<4"
+pillow = "^10.3.0"
+requests = "^2.31.0"
+
+[tool.poetry.group.dev.dependencies]
+mypy = ">=0.991,<1.10"
+pre-commit = ">=2.20,<4.0"
+taskipy = "^1.10.3"
+pytest = ">=7.2.2,<9.0.0"
+pytest-cov = ">=4,<6"
+types-pillow = "^10.2.0.20240415"
+types-requests = "^2.31.0.20240406"
+
+[tool.poetry.scripts]
+gettake = "gettake.main:main"
+
+[tool.black]
+line-length = 120
+target-version = ['py39']
+
+[tool.mypy]
+pretty = true
+python_version = "3.9"
+show_error_codes = true
+strict = true
+
+[tool.pyright]
+pythonVersion = "3.9"
+typeCheckingMode = "strict"
+
+[tool.lint.ruff]
+select = ["ALL"]
+ignore = ["D", "ANN101"]
+line-length = 120
+
+[tool.lint.ruff.mccabe]
+max-complexity = 18
+
+[tool.lint.ruff.per-file-ignores]
+"main.py" = [
+  "T201", # `print` found
+]
+"tests/*test_*.py" = [
+  "S101", # Use of assert detected
+]
+
+[tool.taskipy.tasks]
+test = "pytest --cov=gettake --cov-report=term"
+"test:ci" = "task test --cov-report=xml:cov.xml"
+lint = "pre-commit run -a"
+profile = "python -m cProfile"
