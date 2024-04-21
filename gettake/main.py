@@ -96,7 +96,11 @@ def parse_args(test: list[str] | None = None) -> Option:
 
 def main(test: list[str] | None = None) -> None:
     opt = parse_args(test)
+    print(f"[+] Target:\t{opt.url.geturl()}")
+    print(f"[+] Host:\t{opt.url.hostname}")
+    print(f"[+] Slug:\t{opt.get_slug()}")
     get_images(opt)
+    print("[+] Done!")
 
 
 if __name__ == "__main__":

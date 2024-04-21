@@ -57,27 +57,28 @@ def __get_page(ptimg: PositionOfImage, image: Image.Image) -> Image.Image:
     return decoded_image
 
 
-def __get_pages(opt: Option, chapter: str, session: Session) -> None:
+def __get_pages(opt: Option, chapter: str, session: Session) -> bool:
     chapter_dir = opt.save_dir / chapter
     if chapter_dir.is_dir() and not opt.overwrite:
-        return
+        return False
     chapter_dir.mkdir(exist_ok=True, parents=True)
 
     base_url = opt.get_file_url(chapter)
     for page_idx in range(1, 10000):
         page = f"{page_idx:04}"
-        ptimg_res = session.get(base_url + f"/{page}.ptimg.json")
+        ptimg_res = session.get(f"{base_url}/{page}.ptimg.json")
         if not ptimg_res.ok:
-            return
-        image_res = session.get(base_url + f"/{page}.jpg")
+            break
+        image_res = session.get(f"{base_url}/{page}.jpg")
         if not image_res.ok:
-            return
+            raise ValueError(f"'{base_url}/{page}.jpg' returns {image_res.status_code}")
         __get_page(
             ptimg_res.json(),
             Image.open(BytesIO(image_res.content)),
         ).save(
             chapter_dir / f"{page}.png",
         )
+    return True
 
 
 def __get_chapters(source: str) -> tuple[str, ...]:
@@ -97,8 +98,12 @@ def get_images(opt: Option) -> None:
 
     with Session() as session:
         session.headers = {"user-agent": _UA}
-        for chapter in __get_chapters(session.get(opt.url.geturl()).text):
-            __get_pages(opt, chapter, session)
+        chapters = __get_chapters(session.get(opt.url.geturl()).text)
+        chapters_len = len(chapters)
+        print(f"[+] {chapters_len:04} chapter(s) found!")  # noqa: T201
+        for idx, chapter in enumerate(chapters):
+            print(f"[-] {idx + 1:04} / {chapters_len:04}...", end="", flush=True)  # noqa: T201
+            print("..saved!" if __get_pages(opt, chapter, session) else "skipped!")  # noqa: T201
 
 
 __all__ = ("get_images",)
