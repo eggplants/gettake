@@ -18,6 +18,24 @@ pipx install gettake
 
 ## Run
 
+```shellsession
+$ gettake https://webcomicgamma.takeshobo.co.jp/manga/madeinabyss/
+[+] Target:     https://webcomicgamma.takeshobo.co.jp/manga/madeinabyss/
+[+] Host:       webcomicgamma.takeshobo.co.jp
+[+] Slug:       madeinabyss
+[+] 0074 chapter(s) found!
+...
+[+] Done!
+
+$ tree -dL 1 ./madeinabyss
+madeinabyss
+├── 001
+├── 002
+...
+└── 067
+74 directories
+```
+
 ## Help
 
 ```shellsession

@@ -83,12 +83,14 @@ def __get_pages(opt: Option, chapter: str, session: Session) -> bool:
 
 def __get_chapters(source: str) -> tuple[str, ...]:
     return tuple(
-        str(chapter)
-        for m in re.finditer(
-            r'(?<=_epi)(\d+(?:_\d+)*)(?=")',
-            source,
+        sorted(
+            str(chapter)
+            for m in re.finditer(
+                r'(?<=_epi)(\d+(?:_\d+)*)(?=")',
+                source,
+            )
+            if isinstance(chapter := m.group(), str)
         )
-        if isinstance(chapter := m.group(), str)
     )
 
 
