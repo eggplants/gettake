@@ -1,8 +1,10 @@
+"""Get and save images by chapters from specified work page."""
+
 from __future__ import annotations
 
 import re
-
 from io import BytesIO
+
 from PIL import Image
 from requests import Session
 
@@ -12,6 +14,15 @@ _UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ch
 
 
 def __get_page(ptimg: PositionOfImage, image: Image.Image) -> Image.Image:
+    """Get a page image from ptimg and image.
+
+    Args:
+        ptimg (PositionOfImage): ptimg.json
+        image (Image.Image): scrumbled image data.
+
+    Returns:
+        Image.Image: decoded image
+    """
     view = ptimg["views"][0]
     decoded_image = Image.new("RGB", (view["width"], view["height"]))
     pattern = re.compile(
@@ -58,6 +69,19 @@ def __get_page(ptimg: PositionOfImage, image: Image.Image) -> Image.Image:
 
 
 def __get_pages(opt: Option, chapter: str, session: Session) -> bool:
+    """Get pages from specified chapter.
+
+    Args:
+        opt (Option): cli options.
+        chapter (str): chapter name.
+        session (Session): requests session.
+
+    Raises:
+        ValueError: if image response is not ok.
+
+    Returns:
+        bool: True if saved, False if skipped.
+    """
     chapter_dir = opt.save_dir / chapter
     if chapter_dir.is_dir() and not opt.overwrite:
         return False
@@ -71,7 +95,7 @@ def __get_pages(opt: Option, chapter: str, session: Session) -> bool:
             break
         image_res = session.get(f"{base_url}/{page}.jpg")
         if not image_res.ok:
-            raise ValueError(f"'{base_url}/{page}.jpg' returns {image_res.status_code}")
+            raise ValueError(f"{image_res.url!r} returns {image_res.status_code}")
         __get_page(
             ptimg_res.json(),
             Image.open(BytesIO(image_res.content)),
@@ -81,35 +105,53 @@ def __get_pages(opt: Option, chapter: str, session: Session) -> bool:
     return True
 
 
-def __get_chapters(source: str) -> tuple[str, ...]:
-    return tuple(
-        sorted(
-            str(chapter)
+def __get_chapters(source: str) -> list[str]:
+    """Get chapters from source.
+
+    Args:
+        source (str): source of the page.
+
+    Returns:
+        list[str]: chapters.
+    """
+    return sorted(
+        {
+            m.group()
             for m in re.finditer(
                 r'(?<=_epi)(\d+(?:_\d+)*)(?=")',
                 source,
             )
-            if isinstance(chapter := m.group(), str)
-        )
+        },
     )
 
 
 def get_images(opt: Option) -> None:
+    """Get images from specified url.
+
+    Args:
+        opt (Option): cli options.
+    """
     opt.save_dir /= opt.get_slug()
     opt.save_dir.mkdir(exist_ok=True, parents=True)
 
-    with Session() as session:
-        session.headers = {"user-agent": _UA}
-        chapters = __get_chapters(session.get(opt.url.geturl()).text)
-        chapters_len = len(chapters)
-        print(f"[+] {chapters_len:04} chapter(s) found!")  # noqa: T201
-        for idx, chapter in enumerate(chapters):
+    session = Session()
+
+    session.headers = {"user-agent": _UA}
+    chapters = __get_chapters(session.get(opt.url.geturl()).text)
+    chapters_len = len(chapters)
+    print(f"[+] {chapters_len:04} chapter(s) found!")  # noqa: T201
+    for idx, chapter in enumerate(chapters):
+        if not opt.quiet:
             print(
-                f"[-] {idx + 1:04} / {chapters_len:04}...", end="", flush=True
+                f"[-] Now: {chapter!r} [{idx + 1:04} / {chapters_len:04}] ...",
+                end="",
+                flush=True,
             )  # noqa: T201
-            print(
-                "..saved!" if __get_pages(opt, chapter, session) else "skipped!"
-            )  # noqa: T201
+        skipped = __get_pages(opt, chapter, session)
+        if not opt.quiet:
+            print("..saved!" if skipped else "skipped!")  # noqa: T201
+
+    session.close()
 
 
 __all__ = ("get_images",)

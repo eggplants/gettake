@@ -1,7 +1,9 @@
+"""Models for gettake."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, TypedDict, Literal
+from typing import TYPE_CHECKING, Literal, TypedDict
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -13,10 +15,19 @@ class Option:
     url: ParseResult
     save_dir: Path
     overwrite: bool
+    quiet: bool
 
     def get_file_url(self, chapter: str) -> str:
+        """Get file url.
+
+        Args:
+            chapter (str): chapter name.
+
+            Returns:
+                str: file url.
+        """
         file_url = self.url._replace(
-            path="/_files/" + self.get_slug() + f"/{chapter}/data",
+            path=f"/_files/{self.get_slug()}/{chapter}/data",
         )
         return file_url.geturl()
 
