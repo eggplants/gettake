@@ -50,14 +50,49 @@ pipx install gettake
 
 ```shellsession
 $ gettake https://webcomicgamma.takeshobo.co.jp/manga/madeinabyss/
+[+] Target: https://webcomicgamma.takeshobo.co.jp/manga/madeinabyss/
+[+] Host:   webcomicgamma.takeshobo.co.jp
+[+] Slug:   madeinabyss
+[+] 0072 chapter(s) found!
+[-] Now: '001' [0001 / 0072] .....saved!
+[-] Now: '002' [0002 / 0072] .....saved!
+[-] Now: '003' [0003 / 0072] .....saved!
+...
+[+] Done!
 
 $ tree -dL 1 ./madeinabyss
+->>> tree -dL 1 ./madeinabyss                                                                                            01:18:53 [38/47]
+./madeinabyss
+├── 001
+├── 002
+├── 003
+...
+└── 067
+
+73 directories
 ```
 
 ## Help
 
 ```shellsession
 $ gettake -h
+usage: gettake [-h] [-d DIR] [-o] [-q] [-V] url
+
+Get and save images from webcomicgamma.
+
+positional arguments:
+  url                    target url
+
+options:
+  -h, --help             show this help message and exit
+  -d DIR, --save-dir DIR
+                         directory to save downloaded images (default: .)
+  -o, --overwrite        overwrite (default: False)
+  -q, --quiet            keep stdout quiet (default: False)
+  -V, --version          show program's version number and exit
+
+available urls:
+  - https://webcomicgamma.takeshobo.co.jp
 ```
 
 ## License

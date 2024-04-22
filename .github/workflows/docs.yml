@@ -25,4 +25,8 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - uses: abatilo/actions-poetry@v3
     - run: poetry install --no-interaction --with docs
-    - run: poetry run portray on_github_pages -f
+    - run: poetry run portray as_html
+    - uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./site
