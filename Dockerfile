@@ -6,7 +6,6 @@ FROM python:3-slim
 ARG VERSION
 ENV VERSION ${VERSION:-master}
 
-# git
 RUN <<-EOF
     set -x
     apt-get update
@@ -14,8 +13,8 @@ RUN <<-EOF
     apt-get autoremove -qq -y --purge
     apt-get clean
     rm -rf /var/lib/apt/lists/*
+    pip install --no-cache-dir git+https://github.com/eggplants/gettake@${VERSION}
+    apt-get purge -y --auto-remove git
 EOF
-
-RUN pip install --no-cache-dir git+https://github.com/eggplants/gettake@${VERSION}
 
 ENTRYPOINT ["gettake"]
