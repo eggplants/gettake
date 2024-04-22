@@ -17,7 +17,7 @@ classifiers = [
 description = "Get and save images from webcomicgamma"
 keywords = ["downloader", "cli", "manga"]
 name = "gettake"
-packages = [{include = "gettake"}]
+packages = [{ include = "gettake" }]
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/eggplants/gettake"
@@ -36,26 +36,30 @@ pytest = ">=7.2.2,<9.0.0"
 pytest-cov = ">=4,<6"
 types-pillow = "^10.2.0.20240415"
 types-requests = "^2.31.0.20240406"
+ruff = "^0.4.1"
+
+[tool.poetry.group.docs.dependencies]
+portray = "^1.8.0"
 
 [tool.poetry.scripts]
 gettake = "gettake.main:main"
 
 [tool.black]
-target-version = ['py39']
+target-version = ["py312"]
 
 [tool.mypy]
 pretty = true
-python_version = "3.9"
+python_version = "3.12"
 show_error_codes = true
 strict = true
 
 [tool.pyright]
-pythonVersion = "3.9"
+pythonVersion = "3.12"
 typeCheckingMode = "strict"
 
 [tool.lint.ruff]
 select = ["ALL"]
-ignore = ["D", "ANN101"]
+# ignore = []
 
 [tool.lint.ruff.per-file-ignores]
 "main.py" = [
@@ -70,3 +74,4 @@ test = "pytest --cov=gettake --cov-report=term"
 "test:ci" = "task test --cov-report=xml:cov.xml"
 lint = "pre-commit run -a"
 profile = "python -m cProfile"
+docs = "portray in_browser"
