@@ -36,6 +36,7 @@
         "-ms-python.vscode-pylance"
       ],
       "settings": {
+        "dev.containers.experimentalLockfile": true,
         "terminal.integrated.defaultProfile.linux": "zsh",
         "python.defaultInterpreterPath": "./.venv/bin/python",
         "[python]": {
