@@ -61,7 +61,6 @@ $ gettake https://webcomicgamma.takeshobo.co.jp/manga/madeinabyss/
 [+] Done!
 
 $ tree -dL 1 ./madeinabyss
-->>> tree -dL 1 ./madeinabyss                                                                                            01:18:53 [38/47]
 ./madeinabyss
 ├── 001
 ├── 002
