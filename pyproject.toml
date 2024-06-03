@@ -4,9 +4,10 @@ requires = [
   "poetry-core",
 ]
 
-[tool]
 [tool.poetry]
-authors = ["eggplants <w10776e8w@yahoo.co.jp>"]
+authors = [
+  "eggplants <w10776e8w@yahoo.co.jp>",
+]
 classifiers = [
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
@@ -16,9 +17,15 @@ classifiers = [
 ]
 description = "Get and save images from webcomicgamma"
 documentation = "https://egpl.dev/gettake/"
-keywords = ["downloader", "cli", "manga"]
+keywords = [
+  "downloader",
+  "cli",
+  "manga",
+]
 name = "gettake"
-packages = [{ include = "gettake" }]
+packages = [
+  { include = "gettake" },
+]
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/eggplants/gettake"
@@ -46,7 +53,9 @@ portray = "^1.8.0"
 gettake = "gettake.main:main"
 
 [tool.black]
-target-version = ["py312"]
+target-version = [
+  "py312",
+]
 
 [tool.mypy]
 pretty = true
@@ -58,8 +67,12 @@ strict = true
 pythonVersion = "3.12"
 typeCheckingMode = "strict"
 
+[tool]
+
 [tool.lint.ruff]
-select = ["ALL"]
+select = [
+  "ALL",
+]
 # ignore = []
 
 [tool.lint.ruff.per-file-ignores]
