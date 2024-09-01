@@ -44,7 +44,7 @@ pytest = ">=7.2.2,<9.0.0"
 pytest-cov = ">=4,<6"
 types-pillow = "^10.2.0.20240415"
 types-requests = "^2.31.0.20240406"
-ruff = ">=0.4.1,<0.6.0"
+ruff = ">=0.4.1,<0.7.0"
 
 [tool.poetry.group.docs.dependencies]
 portray = "^1.8.0"
