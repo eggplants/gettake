@@ -33,7 +33,7 @@ version = "0.2.0"
 
 [tool.poetry.dependencies]
 python = ">=3.9,<4"
-pillow = "^10.3.0"
+pillow = ">=10.3,<12.0"
 requests = "^2.31.0"
 
 [tool.poetry.group.dev.dependencies]
