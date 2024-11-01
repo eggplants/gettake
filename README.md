@@ -23,9 +23,9 @@
 )
 
 [![ghcr latest](
-  <https://ghcr-badge.deta.dev/eggplants/gettake/latest_tag?trim=major&label=latest>
+  <https://ghcr-badge.egpl.dev/eggplants/gettake/latest_tag?trim=major&label=latest>
  ) ![ghcr size](
-  <https://ghcr-badge.deta.dev/eggplants/gettake/size>
+  <https://ghcr-badge.egpl.dev/eggplants/gettake/size>
 )](
   <https://github.com/eggplants/gettake/pkgs/container/gettake>
 )
