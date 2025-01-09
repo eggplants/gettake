@@ -1,40 +1,48 @@
 [build-system]
 build-backend = "poetry.core.masonry.api"
 requires = [
-  "poetry-core",
+  "poetry-core>=2",
 ]
 
-[tool.poetry]
-authors = [
-  "eggplants <w10776e8w@yahoo.co.jp>",
-]
-classifiers = [
-  "License :: OSI Approved :: MIT License",
-  "Programming Language :: Python",
-  "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: Implementation :: CPython",
-]
+[project]
+name = "gettake"
+version = "0.2.0"
 description = "Get and save images from webcomicgamma"
-documentation = "https://egpl.dev/gettake/"
+readme = "README.md"
 keywords = [
-  "downloader",
   "cli",
+  "downloader",
   "manga",
 ]
-name = "gettake"
+license = { text = "MIT" }
+authors = [
+  { name = "eggplants", email = "w10776e8w@yahoo.co.jp" },
+]
+requires-python = ">=3.9,<4"
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Multimedia :: Graphics",
+  "Typing :: Typed",
+]
+dependencies = [
+  "pillow>=11.1,<12",
+  "requests>=2.32.3,<3",
+]
+urls.Documentation = "https://egpl.dev/gettake/"
+urls.Repository = "https://github.com/eggplants/gettake"
+scripts.gettake = "gettake.main:main"
+
+[tool.poetry]
+requires-poetry = ">=2.0"
 packages = [
   { include = "gettake" },
 ]
-license = "MIT"
-readme = "README.md"
-repository = "https://github.com/eggplants/gettake"
-version = "0.2.0"
-
-[tool.poetry.dependencies]
-python = ">=3.9,<4"
-pillow = ">=10.3,<12.0"
-requests = "^2.31.0"
 
 [tool.poetry.group.dev.dependencies]
 mypy = ">=0.991,<1.15"
@@ -49,8 +57,8 @@ ruff = ">=0.4.1,<0.9.0"
 [tool.poetry.group.docs.dependencies]
 portray = "^1.8.0"
 
-[tool.poetry.scripts]
-gettake = "gettake.main:main"
+[tool.poetry.requires-plugins]
+poetry-plugin-shell = ">=1.0"
 
 [tool.black]
 target-version = [
@@ -66,8 +74,6 @@ strict = true
 [tool.pyright]
 pythonVersion = "3.12"
 typeCheckingMode = "strict"
-
-[tool]
 
 [tool.lint.ruff]
 select = [
