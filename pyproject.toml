@@ -1,6 +1,5 @@
 [build-system]
 build-backend = "hatchling.build"
-
 requires = [ "hatchling", "uv-dynamic-versioning" ]
 
 [project]
@@ -31,7 +30,6 @@ dependencies = [
   "pillow>=11.1,<12",
   "requests>=2.32.3,<3",
 ]
-
 urls.Documentation = "https://egpl.dev/gettake/"
 urls.Repository = "https://github.com/eggplants/gettake"
 scripts.gettake = "gettake.main:main"
@@ -50,6 +48,8 @@ dev = [
 docs = [ "pdoc" ]
 
 [tool.hatch.version]
+# NOTE: tool.hatch.version.source is not listed in official schema.
+# https://github.com/ninoseki/uv-dynamic-versioning/issues/21
 source = "uv-dynamic-versioning"
 
 [tool.hatch.build.targets]
@@ -75,9 +75,6 @@ default-groups = [
   "dev",
   "docs",
 ]
-
-# tool.hatch.version.source is not listed in official schema.
-# https://github.com/ninoseki/uv-dynamic-versioning/issues/21
 
 [tool.uv-dynamic-versioning]
 vcs = "git"
