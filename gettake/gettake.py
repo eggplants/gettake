@@ -4,13 +4,18 @@ from __future__ import annotations
 
 import re
 from io import BytesIO
+from typing import TYPE_CHECKING
 
 from PIL import Image
 from requests import Session
 
-from .models import Option, PositionOfImage
+if TYPE_CHECKING:
+    from .models import Option, PositionOfImage
 
-_UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
+_UA = (
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/123.0.0.0 Safari/537.36"
+)
 
 
 def __get_page(ptimg: PositionOfImage, image: Image.Image) -> Image.Image:
@@ -33,12 +38,13 @@ def __get_page(ptimg: PositionOfImage, image: Image.Image) -> Image.Image:
         \>
         (?P<dx>\d+),(?P<dy>\d+)
         $""",
-        re.X,
+        re.VERBOSE,
     )
     for coord in view["coords"]:
         m = pattern.match(coord)
         if not m:
-            raise ValueError(f"{coord!r} is not matched with expected pattern.")
+            msg = f"{coord!r} is not matched with expected pattern."
+            raise ValueError(msg)
         (
             sx,
             sy,
@@ -95,7 +101,8 @@ def __get_pages(opt: Option, chapter: str, session: Session) -> bool:
             break
         image_res = session.get(f"{base_url}/{page}.jpg")
         if not image_res.ok:
-            raise ValueError(f"{image_res.url!r} returns {image_res.status_code}")
+            msg = f"{image_res.url!r} returns {image_res.status_code}"
+            raise ValueError(msg)
         __get_page(
             ptimg_res.json(),
             Image.open(BytesIO(image_res.content)),
@@ -142,11 +149,11 @@ def get_images(opt: Option) -> None:
     print(f"[+] {chapters_len:04} chapter(s) found!")  # noqa: T201
     for idx, chapter in enumerate(chapters):
         if not opt.quiet:
-            print(
+            print(  # noqa: T201
                 f"[-] Now: {chapter!r} [{idx + 1:04} / {chapters_len:04}] ...",
                 end="",
                 flush=True,
-            )  # noqa: T201
+            )
         skipped = __get_pages(opt, chapter, session)
         if not opt.quiet:
             print("..saved!" if skipped else "skipped!")  # noqa: T201

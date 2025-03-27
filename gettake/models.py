@@ -12,6 +12,8 @@ if TYPE_CHECKING:
 
 @dataclass
 class Option:
+    """CLI Options for gettake."""
+
     url: ParseResult
     save_dir: Path
     overwrite: bool
@@ -23,7 +25,7 @@ class Option:
         Args:
             chapter (str): chapter name.
 
-            Returns:
+        Returns:
                 str: file url.
         """
         file_url = self.url._replace(
@@ -32,6 +34,11 @@ class Option:
         return file_url.geturl()
 
     def get_slug(self) -> str:
+        """Get slug from url.
+
+        Returns:
+            str: slug.
+        """
         return self.url.path.rstrip("/").split("/")[-1]
 
 

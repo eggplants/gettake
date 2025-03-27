@@ -72,7 +72,8 @@ def check_dir(s: str) -> Path:
         return Path().cwd()
     path = Path(s)
     if not path.is_dir():
-        raise ArgumentTypeError(f"{s!r} is not dir.")
+        msg = f"{s!r} is not dir."
+        raise ArgumentTypeError(msg)
     return path
 
 
@@ -82,10 +83,10 @@ def parse_args(test: list[str] | None = None) -> Option:
     Args:
         test (list[str] | None): test args. Defaults to None.
 
-        Returns:
+    Returns:
             Option: cli options.
 
-        Raises:
+    Raises:
             ArgumentTypeError: if url is invalid.
     """
     parser = ArgumentParser(

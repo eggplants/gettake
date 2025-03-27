@@ -56,21 +56,20 @@ source = "uv-dynamic-versioning"
 sdist.include = [ "gettake" ]
 wheel.include = [ "gettake" ]
 
-[tool.ruff.format]
-indent-style = "space"
-quote-style = "double"
-
-[tool.ruff.lint]
-select = [
+[tool.ruff]
+format.indent-style = "space"
+format.quote-style = "double"
+lint.select = [
   "ALL",
 ]
-per-file-ignores."main.py" = [
+lint.per-file-ignores."main.py" = [
   "T201", # `print` found
 ]
-per-file-ignores."tests/*test_*.py" = [
+lint.per-file-ignores."tests/*.py" = [
+  "D",
   "S101", # Use of assert detected
 ]
-pydocstyle.convention = "google"
+lint.pydocstyle.convention = "google"
 
 [tool.mypy]
 pretty = true
