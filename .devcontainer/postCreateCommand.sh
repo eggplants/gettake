@@ -7,7 +7,7 @@ uv sync --dev --all-extras
 uv run pre-commit install --allow-missing-config
 
 cat<<'A'>> ~/.zshrc
-. .venv/bin/activate
+command -v deactivate &>/dev/null || . .venv/bin/activate
 A
 
 sed -i ~/.zshrc -e 's/^ZSH_THEME=.*/ZSH_THEME="refined"/'
