@@ -56,9 +56,21 @@ source = "uv-dynamic-versioning"
 sdist.include = [ "gettake" ]
 wheel.include = [ "gettake" ]
 
-[tool.ruff]
-format.indent-style = "space"
-format.quote-style = "double"
+[tool.ruff.format]
+indent-style = "space"
+quote-style = "double"
+
+[tool.ruff.lint]
+select = [
+  "ALL",
+]
+per-file-ignores."main.py" = [
+  "T201", # `print` found
+]
+per-file-ignores."tests/*test_*.py" = [
+  "S101", # Use of assert detected
+]
+pydocstyle.convention = "google"
 
 [tool.mypy]
 pretty = true
@@ -80,22 +92,9 @@ default-groups = [
 vcs = "git"
 style = "semver"
 
-[tool.lint.ruff]
-select = [
-  "ALL",
-]
-
-[tool.lint.ruff.per-file-ignores]
-"main.py" = [
-  "T201", # `print` found
-]
-"tests/*test_*.py" = [
-  "S101", # Use of assert detected
-]
-
 [tool.taskipy.tasks]
 test = "pytest --cov=gettake --cov-report=term"
 "test:ci" = "task test --cov-report=xml:cov.xml"
 lint = "pre-commit run -a"
 profile = "python -m cProfile"
-gendoc = "pdoc gettake -o ./docs"
+gendoc = "pdoc gettake -o ./docs --docformat google"
