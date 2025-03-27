@@ -151,103 +151,104 @@
 </span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a>        <span class="k">return</span> <span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
 </span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a>    <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 </span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
-</span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a>        <span class="k">raise</span> <span class="n">ArgumentTypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">s</span><span class="si">!r}</span><span class="s2"> is not dir.&quot;</span><span class="p">)</span>
-</span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a>    <span class="k">return</span> <span class="n">path</span>
-</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a>
+</span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a>        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">s</span><span class="si">!r}</span><span class="s2"> is not dir.&quot;</span>
+</span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a>        <span class="k">raise</span> <span class="n">ArgumentTypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a>    <span class="k">return</span> <span class="n">path</span>
 </span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a>
-</span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a><span class="k">def</span><span class="w"> </span><span class="nf">parse_args</span><span class="p">(</span><span class="n">test</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Option</span><span class="p">:</span>
-</span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse arguments.</span>
-</span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a>
-</span><span id="L-82"><a href="#L-82"><span class="linenos"> 82</span></a><span class="sd">    Args:</span>
-</span><span id="L-83"><a href="#L-83"><span class="linenos"> 83</span></a><span class="sd">        test (list[str] | None): test args. Defaults to None.</span>
-</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a>
-</span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a><span class="sd">        Returns:</span>
-</span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a><span class="sd">            Option: cli options.</span>
-</span><span id="L-87"><a href="#L-87"><span class="linenos"> 87</span></a>
-</span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a><span class="sd">        Raises:</span>
-</span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a><span class="sd">            ArgumentTypeError: if url is invalid.</span>
-</span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a>    <span class="n">parser</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">(</span>
-</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a>        <span class="n">formatter_class</span><span class="o">=</span><span class="p">(</span>
-</span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a>            <span class="k">lambda</span> <span class="n">prog</span><span class="p">:</span> <span class="n">CustomFormatter</span><span class="p">(</span>
-</span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a>                <span class="n">prog</span><span class="p">,</span>
-</span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a>                <span class="n">width</span><span class="o">=</span><span class="n">get_terminal_size</span><span class="p">(</span><span class="n">fallback</span><span class="o">=</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span>
-</span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a>                <span class="n">max_help_position</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
-</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a>            <span class="p">)</span>
-</span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a>        <span class="p">),</span>
-</span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a>        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Get and save images from webcomicgamma.&quot;</span><span class="p">,</span>
-</span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a>        <span class="n">epilog</span><span class="o">=</span><span class="n">available_list</span><span class="p">(),</span>
-</span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a>    <span class="p">)</span>
-</span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a>
-</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-</span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a>        <span class="s2">&quot;url&quot;</span><span class="p">,</span>
-</span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a>        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;url&quot;</span><span class="p">,</span>
-</span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a>        <span class="nb">type</span><span class="o">=</span><span class="n">check_url</span><span class="p">,</span>
-</span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;target url&quot;</span><span class="p">,</span>
-</span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a>    <span class="p">)</span>
-</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a>        <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
-</span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a>        <span class="s2">&quot;--save-dir&quot;</span><span class="p">,</span>
-</span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a>        <span class="nb">type</span><span class="o">=</span><span class="n">check_dir</span><span class="p">,</span>
-</span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a>        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;DIR&quot;</span><span class="p">,</span>
-</span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a>        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span>
-</span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;directory to save downloaded images&quot;</span><span class="p">,</span>
-</span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a>    <span class="p">)</span>
-</span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-</span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a>        <span class="s2">&quot;-o&quot;</span><span class="p">,</span>
-</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a>        <span class="s2">&quot;--overwrite&quot;</span><span class="p">,</span>
-</span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a>        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
-</span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;overwrite&quot;</span><span class="p">,</span>
-</span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a>    <span class="p">)</span>
-</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-</span><span id="L-124"><a href="#L-124"><span class="linenos">124</span></a>        <span class="s2">&quot;-q&quot;</span><span class="p">,</span>
-</span><span id="L-125"><a href="#L-125"><span class="linenos">125</span></a>        <span class="s2">&quot;--quiet&quot;</span><span class="p">,</span>
-</span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a>        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
-</span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;keep stdout quiet&quot;</span><span class="p">,</span>
-</span><span id="L-128"><a href="#L-128"><span class="linenos">128</span></a>    <span class="p">)</span>
-</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-V&quot;</span><span class="p">,</span> <span class="s2">&quot;--version&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">__version__</span><span class="p">)</span>
-</span><span id="L-130"><a href="#L-130"><span class="linenos">130</span></a>
-</span><span id="L-131"><a href="#L-131"><span class="linenos">131</span></a>    <span class="k">if</span> <span class="n">test</span><span class="p">:</span>
-</span><span id="L-132"><a href="#L-132"><span class="linenos">132</span></a>        <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
-</span><span id="L-133"><a href="#L-133"><span class="linenos">133</span></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-</span><span id="L-134"><a href="#L-134"><span class="linenos">134</span></a>        <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
-</span><span id="L-135"><a href="#L-135"><span class="linenos">135</span></a>        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-</span><span id="L-136"><a href="#L-136"><span class="linenos">136</span></a>    <span class="k">else</span><span class="p">:</span>
-</span><span id="L-137"><a href="#L-137"><span class="linenos">137</span></a>        <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-</span><span id="L-138"><a href="#L-138"><span class="linenos">138</span></a>    <span class="k">return</span> <span class="n">Option</span><span class="p">(</span>
-</span><span id="L-139"><a href="#L-139"><span class="linenos">139</span></a>        <span class="n">url</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
-</span><span id="L-140"><a href="#L-140"><span class="linenos">140</span></a>        <span class="n">save_dir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">save_dir</span><span class="p">,</span>
-</span><span id="L-141"><a href="#L-141"><span class="linenos">141</span></a>        <span class="n">overwrite</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">overwrite</span><span class="p">,</span>
-</span><span id="L-142"><a href="#L-142"><span class="linenos">142</span></a>        <span class="n">quiet</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">quiet</span><span class="p">,</span>
-</span><span id="L-143"><a href="#L-143"><span class="linenos">143</span></a>    <span class="p">)</span>
-</span><span id="L-144"><a href="#L-144"><span class="linenos">144</span></a>
+</span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a>
+</span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a><span class="k">def</span><span class="w"> </span><span class="nf">parse_args</span><span class="p">(</span><span class="n">test</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Option</span><span class="p">:</span>
+</span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse arguments.</span>
+</span><span id="L-82"><a href="#L-82"><span class="linenos"> 82</span></a>
+</span><span id="L-83"><a href="#L-83"><span class="linenos"> 83</span></a><span class="sd">    Args:</span>
+</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a><span class="sd">        test (list[str] | None): test args. Defaults to None.</span>
+</span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a>
+</span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a><span class="sd">    Returns:</span>
+</span><span id="L-87"><a href="#L-87"><span class="linenos"> 87</span></a><span class="sd">            Option: cli options.</span>
+</span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a>
+</span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a><span class="sd">    Raises:</span>
+</span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a><span class="sd">            ArgumentTypeError: if url is invalid.</span>
+</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a>    <span class="n">parser</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">(</span>
+</span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a>        <span class="n">formatter_class</span><span class="o">=</span><span class="p">(</span>
+</span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a>            <span class="k">lambda</span> <span class="n">prog</span><span class="p">:</span> <span class="n">CustomFormatter</span><span class="p">(</span>
+</span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a>                <span class="n">prog</span><span class="p">,</span>
+</span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a>                <span class="n">width</span><span class="o">=</span><span class="n">get_terminal_size</span><span class="p">(</span><span class="n">fallback</span><span class="o">=</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span>
+</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a>                <span class="n">max_help_position</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
+</span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a>            <span class="p">)</span>
+</span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a>        <span class="p">),</span>
+</span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a>        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Get and save images from webcomicgamma.&quot;</span><span class="p">,</span>
+</span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a>        <span class="n">epilog</span><span class="o">=</span><span class="n">available_list</span><span class="p">(),</span>
+</span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a>    <span class="p">)</span>
+</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a>
+</span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+</span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a>        <span class="s2">&quot;url&quot;</span><span class="p">,</span>
+</span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a>        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;url&quot;</span><span class="p">,</span>
+</span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a>        <span class="nb">type</span><span class="o">=</span><span class="n">check_url</span><span class="p">,</span>
+</span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;target url&quot;</span><span class="p">,</span>
+</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a>    <span class="p">)</span>
+</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+</span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a>        <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
+</span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a>        <span class="s2">&quot;--save-dir&quot;</span><span class="p">,</span>
+</span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a>        <span class="nb">type</span><span class="o">=</span><span class="n">check_dir</span><span class="p">,</span>
+</span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a>        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;DIR&quot;</span><span class="p">,</span>
+</span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a>        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span>
+</span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;directory to save downloaded images&quot;</span><span class="p">,</span>
+</span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a>    <span class="p">)</span>
+</span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a>        <span class="s2">&quot;-o&quot;</span><span class="p">,</span>
+</span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a>        <span class="s2">&quot;--overwrite&quot;</span><span class="p">,</span>
+</span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a>        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+</span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;overwrite&quot;</span><span class="p">,</span>
+</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a>    <span class="p">)</span>
+</span><span id="L-124"><a href="#L-124"><span class="linenos">124</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+</span><span id="L-125"><a href="#L-125"><span class="linenos">125</span></a>        <span class="s2">&quot;-q&quot;</span><span class="p">,</span>
+</span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a>        <span class="s2">&quot;--quiet&quot;</span><span class="p">,</span>
+</span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a>        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+</span><span id="L-128"><a href="#L-128"><span class="linenos">128</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;keep stdout quiet&quot;</span><span class="p">,</span>
+</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a>    <span class="p">)</span>
+</span><span id="L-130"><a href="#L-130"><span class="linenos">130</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-V&quot;</span><span class="p">,</span> <span class="s2">&quot;--version&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">__version__</span><span class="p">)</span>
+</span><span id="L-131"><a href="#L-131"><span class="linenos">131</span></a>
+</span><span id="L-132"><a href="#L-132"><span class="linenos">132</span></a>    <span class="k">if</span> <span class="n">test</span><span class="p">:</span>
+</span><span id="L-133"><a href="#L-133"><span class="linenos">133</span></a>        <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+</span><span id="L-134"><a href="#L-134"><span class="linenos">134</span></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span><span id="L-135"><a href="#L-135"><span class="linenos">135</span></a>        <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
+</span><span id="L-136"><a href="#L-136"><span class="linenos">136</span></a>        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="L-137"><a href="#L-137"><span class="linenos">137</span></a>    <span class="k">else</span><span class="p">:</span>
+</span><span id="L-138"><a href="#L-138"><span class="linenos">138</span></a>        <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+</span><span id="L-139"><a href="#L-139"><span class="linenos">139</span></a>    <span class="k">return</span> <span class="n">Option</span><span class="p">(</span>
+</span><span id="L-140"><a href="#L-140"><span class="linenos">140</span></a>        <span class="n">url</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+</span><span id="L-141"><a href="#L-141"><span class="linenos">141</span></a>        <span class="n">save_dir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">save_dir</span><span class="p">,</span>
+</span><span id="L-142"><a href="#L-142"><span class="linenos">142</span></a>        <span class="n">overwrite</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">overwrite</span><span class="p">,</span>
+</span><span id="L-143"><a href="#L-143"><span class="linenos">143</span></a>        <span class="n">quiet</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">quiet</span><span class="p">,</span>
+</span><span id="L-144"><a href="#L-144"><span class="linenos">144</span></a>    <span class="p">)</span>
 </span><span id="L-145"><a href="#L-145"><span class="linenos">145</span></a>
-</span><span id="L-146"><a href="#L-146"><span class="linenos">146</span></a><span class="k">def</span><span class="w"> </span><span class="nf">_main</span><span class="p">(</span><span class="n">test</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-147"><a href="#L-147"><span class="linenos">147</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Main function.</span>
-</span><span id="L-148"><a href="#L-148"><span class="linenos">148</span></a>
-</span><span id="L-149"><a href="#L-149"><span class="linenos">149</span></a><span class="sd">    Args:</span>
-</span><span id="L-150"><a href="#L-150"><span class="linenos">150</span></a><span class="sd">        test (list[str] | None): test args. Defaults to None.</span>
-</span><span id="L-151"><a href="#L-151"><span class="linenos">151</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-152"><a href="#L-152"><span class="linenos">152</span></a>    <span class="n">opt</span> <span class="o">=</span> <span class="n">parse_args</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
-</span><span id="L-153"><a href="#L-153"><span class="linenos">153</span></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">opt</span><span class="o">.</span><span class="n">quiet</span><span class="p">:</span>
-</span><span id="L-154"><a href="#L-154"><span class="linenos">154</span></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[+] Target: </span><span class="si">{</span><span class="n">opt</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">geturl</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="L-155"><a href="#L-155"><span class="linenos">155</span></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[+] Host:   </span><span class="si">{</span><span class="n">opt</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">hostname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="L-156"><a href="#L-156"><span class="linenos">156</span></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[+] Slug:   </span><span class="si">{</span><span class="n">opt</span><span class="o">.</span><span class="n">get_slug</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span id="L-157"><a href="#L-157"><span class="linenos">157</span></a>    <span class="n">get_images</span><span class="p">(</span><span class="n">opt</span><span class="p">)</span>
-</span><span id="L-158"><a href="#L-158"><span class="linenos">158</span></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">opt</span><span class="o">.</span><span class="n">quiet</span><span class="p">:</span>
-</span><span id="L-159"><a href="#L-159"><span class="linenos">159</span></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[+] Done!&quot;</span><span class="p">)</span>
-</span><span id="L-160"><a href="#L-160"><span class="linenos">160</span></a>
+</span><span id="L-146"><a href="#L-146"><span class="linenos">146</span></a>
+</span><span id="L-147"><a href="#L-147"><span class="linenos">147</span></a><span class="k">def</span><span class="w"> </span><span class="nf">_main</span><span class="p">(</span><span class="n">test</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-148"><a href="#L-148"><span class="linenos">148</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Main function.</span>
+</span><span id="L-149"><a href="#L-149"><span class="linenos">149</span></a>
+</span><span id="L-150"><a href="#L-150"><span class="linenos">150</span></a><span class="sd">    Args:</span>
+</span><span id="L-151"><a href="#L-151"><span class="linenos">151</span></a><span class="sd">        test (list[str] | None): test args. Defaults to None.</span>
+</span><span id="L-152"><a href="#L-152"><span class="linenos">152</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-153"><a href="#L-153"><span class="linenos">153</span></a>    <span class="n">opt</span> <span class="o">=</span> <span class="n">parse_args</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+</span><span id="L-154"><a href="#L-154"><span class="linenos">154</span></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">opt</span><span class="o">.</span><span class="n">quiet</span><span class="p">:</span>
+</span><span id="L-155"><a href="#L-155"><span class="linenos">155</span></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[+] Target: </span><span class="si">{</span><span class="n">opt</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">geturl</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="L-156"><a href="#L-156"><span class="linenos">156</span></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[+] Host:   </span><span class="si">{</span><span class="n">opt</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">hostname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="L-157"><a href="#L-157"><span class="linenos">157</span></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[+] Slug:   </span><span class="si">{</span><span class="n">opt</span><span class="o">.</span><span class="n">get_slug</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="L-158"><a href="#L-158"><span class="linenos">158</span></a>    <span class="n">get_images</span><span class="p">(</span><span class="n">opt</span><span class="p">)</span>
+</span><span id="L-159"><a href="#L-159"><span class="linenos">159</span></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">opt</span><span class="o">.</span><span class="n">quiet</span><span class="p">:</span>
+</span><span id="L-160"><a href="#L-160"><span class="linenos">160</span></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[+] Done!&quot;</span><span class="p">)</span>
 </span><span id="L-161"><a href="#L-161"><span class="linenos">161</span></a>
-</span><span id="L-162"><a href="#L-162"><span class="linenos">162</span></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-163"><a href="#L-163"><span class="linenos">163</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Main function.&quot;&quot;&quot;</span>
-</span><span id="L-164"><a href="#L-164"><span class="linenos">164</span></a>    <span class="k">try</span><span class="p">:</span>
-</span><span id="L-165"><a href="#L-165"><span class="linenos">165</span></a>        <span class="n">_main</span><span class="p">()</span>
-</span><span id="L-166"><a href="#L-166"><span class="linenos">166</span></a>    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
-</span><span id="L-167"><a href="#L-167"><span class="linenos">167</span></a>        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="L-168"><a href="#L-168"><span class="linenos">168</span></a>
+</span><span id="L-162"><a href="#L-162"><span class="linenos">162</span></a>
+</span><span id="L-163"><a href="#L-163"><span class="linenos">163</span></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-164"><a href="#L-164"><span class="linenos">164</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Main function.&quot;&quot;&quot;</span>
+</span><span id="L-165"><a href="#L-165"><span class="linenos">165</span></a>    <span class="k">try</span><span class="p">:</span>
+</span><span id="L-166"><a href="#L-166"><span class="linenos">166</span></a>        <span class="n">_main</span><span class="p">()</span>
+</span><span id="L-167"><a href="#L-167"><span class="linenos">167</span></a>    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+</span><span id="L-168"><a href="#L-168"><span class="linenos">168</span></a>        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </span><span id="L-169"><a href="#L-169"><span class="linenos">169</span></a>
-</span><span id="L-170"><a href="#L-170"><span class="linenos">170</span></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-</span><span id="L-171"><a href="#L-171"><span class="linenos">171</span></a>    <span class="n">main</span><span class="p">()</span>
+</span><span id="L-170"><a href="#L-170"><span class="linenos">170</span></a>
+</span><span id="L-171"><a href="#L-171"><span class="linenos">171</span></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span id="L-172"><a href="#L-172"><span class="linenos">172</span></a>    <span class="n">main</span><span class="p">()</span>
 </span></pre></div>
 
 
@@ -397,8 +398,9 @@
 </span><span id="check_dir-73"><a href="#check_dir-73"><span class="linenos">73</span></a>        <span class="k">return</span> <span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
 </span><span id="check_dir-74"><a href="#check_dir-74"><span class="linenos">74</span></a>    <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 </span><span id="check_dir-75"><a href="#check_dir-75"><span class="linenos">75</span></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
-</span><span id="check_dir-76"><a href="#check_dir-76"><span class="linenos">76</span></a>        <span class="k">raise</span> <span class="n">ArgumentTypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">s</span><span class="si">!r}</span><span class="s2"> is not dir.&quot;</span><span class="p">)</span>
-</span><span id="check_dir-77"><a href="#check_dir-77"><span class="linenos">77</span></a>    <span class="k">return</span> <span class="n">path</span>
+</span><span id="check_dir-76"><a href="#check_dir-76"><span class="linenos">76</span></a>        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">s</span><span class="si">!r}</span><span class="s2"> is not dir.&quot;</span>
+</span><span id="check_dir-77"><a href="#check_dir-77"><span class="linenos">77</span></a>        <span class="k">raise</span> <span class="n">ArgumentTypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+</span><span id="check_dir-78"><a href="#check_dir-78"><span class="linenos">78</span></a>    <span class="k">return</span> <span class="n">path</span>
 </span></pre></div>
 
 
@@ -436,71 +438,71 @@
 
     </div>
     <a class="headerlink" href="#parse_args"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="parse_args-80"><a href="#parse_args-80"><span class="linenos"> 80</span></a><span class="k">def</span><span class="w"> </span><span class="nf">parse_args</span><span class="p">(</span><span class="n">test</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Option</span><span class="p">:</span>
-</span><span id="parse_args-81"><a href="#parse_args-81"><span class="linenos"> 81</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse arguments.</span>
-</span><span id="parse_args-82"><a href="#parse_args-82"><span class="linenos"> 82</span></a>
-</span><span id="parse_args-83"><a href="#parse_args-83"><span class="linenos"> 83</span></a><span class="sd">    Args:</span>
-</span><span id="parse_args-84"><a href="#parse_args-84"><span class="linenos"> 84</span></a><span class="sd">        test (list[str] | None): test args. Defaults to None.</span>
-</span><span id="parse_args-85"><a href="#parse_args-85"><span class="linenos"> 85</span></a>
-</span><span id="parse_args-86"><a href="#parse_args-86"><span class="linenos"> 86</span></a><span class="sd">        Returns:</span>
-</span><span id="parse_args-87"><a href="#parse_args-87"><span class="linenos"> 87</span></a><span class="sd">            Option: cli options.</span>
-</span><span id="parse_args-88"><a href="#parse_args-88"><span class="linenos"> 88</span></a>
-</span><span id="parse_args-89"><a href="#parse_args-89"><span class="linenos"> 89</span></a><span class="sd">        Raises:</span>
-</span><span id="parse_args-90"><a href="#parse_args-90"><span class="linenos"> 90</span></a><span class="sd">            ArgumentTypeError: if url is invalid.</span>
-</span><span id="parse_args-91"><a href="#parse_args-91"><span class="linenos"> 91</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="parse_args-92"><a href="#parse_args-92"><span class="linenos"> 92</span></a>    <span class="n">parser</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">(</span>
-</span><span id="parse_args-93"><a href="#parse_args-93"><span class="linenos"> 93</span></a>        <span class="n">formatter_class</span><span class="o">=</span><span class="p">(</span>
-</span><span id="parse_args-94"><a href="#parse_args-94"><span class="linenos"> 94</span></a>            <span class="k">lambda</span> <span class="n">prog</span><span class="p">:</span> <span class="n">CustomFormatter</span><span class="p">(</span>
-</span><span id="parse_args-95"><a href="#parse_args-95"><span class="linenos"> 95</span></a>                <span class="n">prog</span><span class="p">,</span>
-</span><span id="parse_args-96"><a href="#parse_args-96"><span class="linenos"> 96</span></a>                <span class="n">width</span><span class="o">=</span><span class="n">get_terminal_size</span><span class="p">(</span><span class="n">fallback</span><span class="o">=</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span>
-</span><span id="parse_args-97"><a href="#parse_args-97"><span class="linenos"> 97</span></a>                <span class="n">max_help_position</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
-</span><span id="parse_args-98"><a href="#parse_args-98"><span class="linenos"> 98</span></a>            <span class="p">)</span>
-</span><span id="parse_args-99"><a href="#parse_args-99"><span class="linenos"> 99</span></a>        <span class="p">),</span>
-</span><span id="parse_args-100"><a href="#parse_args-100"><span class="linenos">100</span></a>        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Get and save images from webcomicgamma.&quot;</span><span class="p">,</span>
-</span><span id="parse_args-101"><a href="#parse_args-101"><span class="linenos">101</span></a>        <span class="n">epilog</span><span class="o">=</span><span class="n">available_list</span><span class="p">(),</span>
-</span><span id="parse_args-102"><a href="#parse_args-102"><span class="linenos">102</span></a>    <span class="p">)</span>
-</span><span id="parse_args-103"><a href="#parse_args-103"><span class="linenos">103</span></a>
-</span><span id="parse_args-104"><a href="#parse_args-104"><span class="linenos">104</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-</span><span id="parse_args-105"><a href="#parse_args-105"><span class="linenos">105</span></a>        <span class="s2">&quot;url&quot;</span><span class="p">,</span>
-</span><span id="parse_args-106"><a href="#parse_args-106"><span class="linenos">106</span></a>        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;url&quot;</span><span class="p">,</span>
-</span><span id="parse_args-107"><a href="#parse_args-107"><span class="linenos">107</span></a>        <span class="nb">type</span><span class="o">=</span><span class="n">check_url</span><span class="p">,</span>
-</span><span id="parse_args-108"><a href="#parse_args-108"><span class="linenos">108</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;target url&quot;</span><span class="p">,</span>
-</span><span id="parse_args-109"><a href="#parse_args-109"><span class="linenos">109</span></a>    <span class="p">)</span>
-</span><span id="parse_args-110"><a href="#parse_args-110"><span class="linenos">110</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-</span><span id="parse_args-111"><a href="#parse_args-111"><span class="linenos">111</span></a>        <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
-</span><span id="parse_args-112"><a href="#parse_args-112"><span class="linenos">112</span></a>        <span class="s2">&quot;--save-dir&quot;</span><span class="p">,</span>
-</span><span id="parse_args-113"><a href="#parse_args-113"><span class="linenos">113</span></a>        <span class="nb">type</span><span class="o">=</span><span class="n">check_dir</span><span class="p">,</span>
-</span><span id="parse_args-114"><a href="#parse_args-114"><span class="linenos">114</span></a>        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;DIR&quot;</span><span class="p">,</span>
-</span><span id="parse_args-115"><a href="#parse_args-115"><span class="linenos">115</span></a>        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span>
-</span><span id="parse_args-116"><a href="#parse_args-116"><span class="linenos">116</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;directory to save downloaded images&quot;</span><span class="p">,</span>
-</span><span id="parse_args-117"><a href="#parse_args-117"><span class="linenos">117</span></a>    <span class="p">)</span>
-</span><span id="parse_args-118"><a href="#parse_args-118"><span class="linenos">118</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-</span><span id="parse_args-119"><a href="#parse_args-119"><span class="linenos">119</span></a>        <span class="s2">&quot;-o&quot;</span><span class="p">,</span>
-</span><span id="parse_args-120"><a href="#parse_args-120"><span class="linenos">120</span></a>        <span class="s2">&quot;--overwrite&quot;</span><span class="p">,</span>
-</span><span id="parse_args-121"><a href="#parse_args-121"><span class="linenos">121</span></a>        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
-</span><span id="parse_args-122"><a href="#parse_args-122"><span class="linenos">122</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;overwrite&quot;</span><span class="p">,</span>
-</span><span id="parse_args-123"><a href="#parse_args-123"><span class="linenos">123</span></a>    <span class="p">)</span>
-</span><span id="parse_args-124"><a href="#parse_args-124"><span class="linenos">124</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-</span><span id="parse_args-125"><a href="#parse_args-125"><span class="linenos">125</span></a>        <span class="s2">&quot;-q&quot;</span><span class="p">,</span>
-</span><span id="parse_args-126"><a href="#parse_args-126"><span class="linenos">126</span></a>        <span class="s2">&quot;--quiet&quot;</span><span class="p">,</span>
-</span><span id="parse_args-127"><a href="#parse_args-127"><span class="linenos">127</span></a>        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
-</span><span id="parse_args-128"><a href="#parse_args-128"><span class="linenos">128</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;keep stdout quiet&quot;</span><span class="p">,</span>
-</span><span id="parse_args-129"><a href="#parse_args-129"><span class="linenos">129</span></a>    <span class="p">)</span>
-</span><span id="parse_args-130"><a href="#parse_args-130"><span class="linenos">130</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-V&quot;</span><span class="p">,</span> <span class="s2">&quot;--version&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">__version__</span><span class="p">)</span>
-</span><span id="parse_args-131"><a href="#parse_args-131"><span class="linenos">131</span></a>
-</span><span id="parse_args-132"><a href="#parse_args-132"><span class="linenos">132</span></a>    <span class="k">if</span> <span class="n">test</span><span class="p">:</span>
-</span><span id="parse_args-133"><a href="#parse_args-133"><span class="linenos">133</span></a>        <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
-</span><span id="parse_args-134"><a href="#parse_args-134"><span class="linenos">134</span></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-</span><span id="parse_args-135"><a href="#parse_args-135"><span class="linenos">135</span></a>        <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
-</span><span id="parse_args-136"><a href="#parse_args-136"><span class="linenos">136</span></a>        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-</span><span id="parse_args-137"><a href="#parse_args-137"><span class="linenos">137</span></a>    <span class="k">else</span><span class="p">:</span>
-</span><span id="parse_args-138"><a href="#parse_args-138"><span class="linenos">138</span></a>        <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-</span><span id="parse_args-139"><a href="#parse_args-139"><span class="linenos">139</span></a>    <span class="k">return</span> <span class="n">Option</span><span class="p">(</span>
-</span><span id="parse_args-140"><a href="#parse_args-140"><span class="linenos">140</span></a>        <span class="n">url</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
-</span><span id="parse_args-141"><a href="#parse_args-141"><span class="linenos">141</span></a>        <span class="n">save_dir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">save_dir</span><span class="p">,</span>
-</span><span id="parse_args-142"><a href="#parse_args-142"><span class="linenos">142</span></a>        <span class="n">overwrite</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">overwrite</span><span class="p">,</span>
-</span><span id="parse_args-143"><a href="#parse_args-143"><span class="linenos">143</span></a>        <span class="n">quiet</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">quiet</span><span class="p">,</span>
-</span><span id="parse_args-144"><a href="#parse_args-144"><span class="linenos">144</span></a>    <span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="parse_args-81"><a href="#parse_args-81"><span class="linenos"> 81</span></a><span class="k">def</span><span class="w"> </span><span class="nf">parse_args</span><span class="p">(</span><span class="n">test</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Option</span><span class="p">:</span>
+</span><span id="parse_args-82"><a href="#parse_args-82"><span class="linenos"> 82</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse arguments.</span>
+</span><span id="parse_args-83"><a href="#parse_args-83"><span class="linenos"> 83</span></a>
+</span><span id="parse_args-84"><a href="#parse_args-84"><span class="linenos"> 84</span></a><span class="sd">    Args:</span>
+</span><span id="parse_args-85"><a href="#parse_args-85"><span class="linenos"> 85</span></a><span class="sd">        test (list[str] | None): test args. Defaults to None.</span>
+</span><span id="parse_args-86"><a href="#parse_args-86"><span class="linenos"> 86</span></a>
+</span><span id="parse_args-87"><a href="#parse_args-87"><span class="linenos"> 87</span></a><span class="sd">    Returns:</span>
+</span><span id="parse_args-88"><a href="#parse_args-88"><span class="linenos"> 88</span></a><span class="sd">            Option: cli options.</span>
+</span><span id="parse_args-89"><a href="#parse_args-89"><span class="linenos"> 89</span></a>
+</span><span id="parse_args-90"><a href="#parse_args-90"><span class="linenos"> 90</span></a><span class="sd">    Raises:</span>
+</span><span id="parse_args-91"><a href="#parse_args-91"><span class="linenos"> 91</span></a><span class="sd">            ArgumentTypeError: if url is invalid.</span>
+</span><span id="parse_args-92"><a href="#parse_args-92"><span class="linenos"> 92</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="parse_args-93"><a href="#parse_args-93"><span class="linenos"> 93</span></a>    <span class="n">parser</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">(</span>
+</span><span id="parse_args-94"><a href="#parse_args-94"><span class="linenos"> 94</span></a>        <span class="n">formatter_class</span><span class="o">=</span><span class="p">(</span>
+</span><span id="parse_args-95"><a href="#parse_args-95"><span class="linenos"> 95</span></a>            <span class="k">lambda</span> <span class="n">prog</span><span class="p">:</span> <span class="n">CustomFormatter</span><span class="p">(</span>
+</span><span id="parse_args-96"><a href="#parse_args-96"><span class="linenos"> 96</span></a>                <span class="n">prog</span><span class="p">,</span>
+</span><span id="parse_args-97"><a href="#parse_args-97"><span class="linenos"> 97</span></a>                <span class="n">width</span><span class="o">=</span><span class="n">get_terminal_size</span><span class="p">(</span><span class="n">fallback</span><span class="o">=</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span>
+</span><span id="parse_args-98"><a href="#parse_args-98"><span class="linenos"> 98</span></a>                <span class="n">max_help_position</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span>
+</span><span id="parse_args-99"><a href="#parse_args-99"><span class="linenos"> 99</span></a>            <span class="p">)</span>
+</span><span id="parse_args-100"><a href="#parse_args-100"><span class="linenos">100</span></a>        <span class="p">),</span>
+</span><span id="parse_args-101"><a href="#parse_args-101"><span class="linenos">101</span></a>        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Get and save images from webcomicgamma.&quot;</span><span class="p">,</span>
+</span><span id="parse_args-102"><a href="#parse_args-102"><span class="linenos">102</span></a>        <span class="n">epilog</span><span class="o">=</span><span class="n">available_list</span><span class="p">(),</span>
+</span><span id="parse_args-103"><a href="#parse_args-103"><span class="linenos">103</span></a>    <span class="p">)</span>
+</span><span id="parse_args-104"><a href="#parse_args-104"><span class="linenos">104</span></a>
+</span><span id="parse_args-105"><a href="#parse_args-105"><span class="linenos">105</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+</span><span id="parse_args-106"><a href="#parse_args-106"><span class="linenos">106</span></a>        <span class="s2">&quot;url&quot;</span><span class="p">,</span>
+</span><span id="parse_args-107"><a href="#parse_args-107"><span class="linenos">107</span></a>        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;url&quot;</span><span class="p">,</span>
+</span><span id="parse_args-108"><a href="#parse_args-108"><span class="linenos">108</span></a>        <span class="nb">type</span><span class="o">=</span><span class="n">check_url</span><span class="p">,</span>
+</span><span id="parse_args-109"><a href="#parse_args-109"><span class="linenos">109</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;target url&quot;</span><span class="p">,</span>
+</span><span id="parse_args-110"><a href="#parse_args-110"><span class="linenos">110</span></a>    <span class="p">)</span>
+</span><span id="parse_args-111"><a href="#parse_args-111"><span class="linenos">111</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+</span><span id="parse_args-112"><a href="#parse_args-112"><span class="linenos">112</span></a>        <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
+</span><span id="parse_args-113"><a href="#parse_args-113"><span class="linenos">113</span></a>        <span class="s2">&quot;--save-dir&quot;</span><span class="p">,</span>
+</span><span id="parse_args-114"><a href="#parse_args-114"><span class="linenos">114</span></a>        <span class="nb">type</span><span class="o">=</span><span class="n">check_dir</span><span class="p">,</span>
+</span><span id="parse_args-115"><a href="#parse_args-115"><span class="linenos">115</span></a>        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;DIR&quot;</span><span class="p">,</span>
+</span><span id="parse_args-116"><a href="#parse_args-116"><span class="linenos">116</span></a>        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span>
+</span><span id="parse_args-117"><a href="#parse_args-117"><span class="linenos">117</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;directory to save downloaded images&quot;</span><span class="p">,</span>
+</span><span id="parse_args-118"><a href="#parse_args-118"><span class="linenos">118</span></a>    <span class="p">)</span>
+</span><span id="parse_args-119"><a href="#parse_args-119"><span class="linenos">119</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+</span><span id="parse_args-120"><a href="#parse_args-120"><span class="linenos">120</span></a>        <span class="s2">&quot;-o&quot;</span><span class="p">,</span>
+</span><span id="parse_args-121"><a href="#parse_args-121"><span class="linenos">121</span></a>        <span class="s2">&quot;--overwrite&quot;</span><span class="p">,</span>
+</span><span id="parse_args-122"><a href="#parse_args-122"><span class="linenos">122</span></a>        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+</span><span id="parse_args-123"><a href="#parse_args-123"><span class="linenos">123</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;overwrite&quot;</span><span class="p">,</span>
+</span><span id="parse_args-124"><a href="#parse_args-124"><span class="linenos">124</span></a>    <span class="p">)</span>
+</span><span id="parse_args-125"><a href="#parse_args-125"><span class="linenos">125</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+</span><span id="parse_args-126"><a href="#parse_args-126"><span class="linenos">126</span></a>        <span class="s2">&quot;-q&quot;</span><span class="p">,</span>
+</span><span id="parse_args-127"><a href="#parse_args-127"><span class="linenos">127</span></a>        <span class="s2">&quot;--quiet&quot;</span><span class="p">,</span>
+</span><span id="parse_args-128"><a href="#parse_args-128"><span class="linenos">128</span></a>        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+</span><span id="parse_args-129"><a href="#parse_args-129"><span class="linenos">129</span></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;keep stdout quiet&quot;</span><span class="p">,</span>
+</span><span id="parse_args-130"><a href="#parse_args-130"><span class="linenos">130</span></a>    <span class="p">)</span>
+</span><span id="parse_args-131"><a href="#parse_args-131"><span class="linenos">131</span></a>    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-V&quot;</span><span class="p">,</span> <span class="s2">&quot;--version&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">__version__</span><span class="p">)</span>
+</span><span id="parse_args-132"><a href="#parse_args-132"><span class="linenos">132</span></a>
+</span><span id="parse_args-133"><a href="#parse_args-133"><span class="linenos">133</span></a>    <span class="k">if</span> <span class="n">test</span><span class="p">:</span>
+</span><span id="parse_args-134"><a href="#parse_args-134"><span class="linenos">134</span></a>        <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+</span><span id="parse_args-135"><a href="#parse_args-135"><span class="linenos">135</span></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span><span id="parse_args-136"><a href="#parse_args-136"><span class="linenos">136</span></a>        <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
+</span><span id="parse_args-137"><a href="#parse_args-137"><span class="linenos">137</span></a>        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="parse_args-138"><a href="#parse_args-138"><span class="linenos">138</span></a>    <span class="k">else</span><span class="p">:</span>
+</span><span id="parse_args-139"><a href="#parse_args-139"><span class="linenos">139</span></a>        <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+</span><span id="parse_args-140"><a href="#parse_args-140"><span class="linenos">140</span></a>    <span class="k">return</span> <span class="n">Option</span><span class="p">(</span>
+</span><span id="parse_args-141"><a href="#parse_args-141"><span class="linenos">141</span></a>        <span class="n">url</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+</span><span id="parse_args-142"><a href="#parse_args-142"><span class="linenos">142</span></a>        <span class="n">save_dir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">save_dir</span><span class="p">,</span>
+</span><span id="parse_args-143"><a href="#parse_args-143"><span class="linenos">143</span></a>        <span class="n">overwrite</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">overwrite</span><span class="p">,</span>
+</span><span id="parse_args-144"><a href="#parse_args-144"><span class="linenos">144</span></a>        <span class="n">quiet</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">quiet</span><span class="p">,</span>
+</span><span id="parse_args-145"><a href="#parse_args-145"><span class="linenos">145</span></a>    <span class="p">)</span>
 </span></pre></div>
 
 
@@ -510,8 +512,18 @@
 
 <ul>
 <li><strong>test (list[str] | None):</strong>  test args. Defaults to None.</li>
-<li><strong>Returns:</strong>  Option: cli options.</li>
-<li><strong>Raises:</strong>  ArgumentTypeError: if url is invalid.</li>
+</ul>
+
+<h6 id="returns">Returns:</h6>
+
+<blockquote>
+  <p>Option: cli options.</p>
+</blockquote>
+
+<h6 id="raises">Raises:</h6>
+
+<ul>
+<li><strong>ArgumentTypeError:</strong>  if url is invalid.</li>
 </ul>
 </div>
 
@@ -528,12 +540,12 @@
 
     </div>
     <a class="headerlink" href="#main"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="main-163"><a href="#main-163"><span class="linenos">163</span></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="main-164"><a href="#main-164"><span class="linenos">164</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Main function.&quot;&quot;&quot;</span>
-</span><span id="main-165"><a href="#main-165"><span class="linenos">165</span></a>    <span class="k">try</span><span class="p">:</span>
-</span><span id="main-166"><a href="#main-166"><span class="linenos">166</span></a>        <span class="n">_main</span><span class="p">()</span>
-</span><span id="main-167"><a href="#main-167"><span class="linenos">167</span></a>    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
-</span><span id="main-168"><a href="#main-168"><span class="linenos">168</span></a>        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="main-164"><a href="#main-164"><span class="linenos">164</span></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="main-165"><a href="#main-165"><span class="linenos">165</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Main function.&quot;&quot;&quot;</span>
+</span><span id="main-166"><a href="#main-166"><span class="linenos">166</span></a>    <span class="k">try</span><span class="p">:</span>
+</span><span id="main-167"><a href="#main-167"><span class="linenos">167</span></a>        <span class="n">_main</span><span class="p">()</span>
+</span><span id="main-168"><a href="#main-168"><span class="linenos">168</span></a>    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+</span><span id="main-169"><a href="#main-169"><span class="linenos">169</span></a>        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </span></pre></div>
 
 
