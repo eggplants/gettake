@@ -1,12 +1,10 @@
 [build-system]
-build-backend = "poetry.core.masonry.api"
-requires = [
-  "poetry-core>=2",
-]
+build-backend = "hatchling.build"
+
+requires = [ "hatchling", "uv-dynamic-versioning" ]
 
 [project]
 name = "gettake"
-version = "0.2.0"
 description = "Get and save images from webcomicgamma"
 readme = "README.md"
 keywords = [
@@ -15,9 +13,7 @@ keywords = [
   "manga",
 ]
 license = { text = "MIT" }
-authors = [
-  { name = "eggplants", email = "w10776e8w@yahoo.co.jp" },
-]
+authors = [ { name = "eggplants", email = "w10776e8w@yahoo.co.jp" } ]
 requires-python = ">=3.9,<4"
 classifiers = [
   "License :: OSI Approved :: MIT License",
@@ -30,40 +26,39 @@ classifiers = [
   "Topic :: Multimedia :: Graphics",
   "Typing :: Typed",
 ]
+dynamic = [ "version" ]
 dependencies = [
   "pillow>=11.1,<12",
   "requests>=2.32.3,<3",
 ]
+
 urls.Documentation = "https://egpl.dev/gettake/"
 urls.Repository = "https://github.com/eggplants/gettake"
 scripts.gettake = "gettake.main:main"
 
-[tool.poetry]
-requires-poetry = ">=2.0"
-packages = [
-  { include = "gettake" },
+[dependency-groups]
+dev = [
+  "mypy>=0.991,<1.15",
+  "pre-commit>=2.20,<5",
+  "pytest>=7.2.2,<9",
+  "pytest-cov>=4,<7",
+  "ruff>=0.4.1,<0.9",
+  "taskipy>=1.10.3,<2",
+  "types-pillow>=10.2.0.20240415,<11",
+  "types-requests>=2.31.0.20240406,<3",
 ]
+docs = [ "pdoc" ]
 
-[tool.poetry.group.dev.dependencies]
-mypy = ">=0.991,<1.15"
-pre-commit = ">=2.20,<5.0"
-taskipy = "^1.10.3"
-pytest = ">=7.2.2,<9.0.0"
-pytest-cov = ">=4,<7"
-types-pillow = "^10.2.0.20240415"
-types-requests = "^2.31.0.20240406"
-ruff = ">=0.4.1,<0.9.0"
+[tool.hatch.version]
+source = "uv-dynamic-versioning"
 
-[tool.poetry.group.docs.dependencies]
-portray = "^1.8.0"
+[tool.hatch.build.targets]
+sdist.include = [ "gettake" ]
+wheel.include = [ "gettake" ]
 
-[tool.poetry.requires-plugins]
-poetry-plugin-shell = ">=1.0"
-
-[tool.black]
-target-version = [
-  "py312",
-]
+[tool.ruff]
+format.indent-style = "space"
+format.quote-style = "double"
 
 [tool.mypy]
 pretty = true
@@ -75,11 +70,23 @@ strict = true
 pythonVersion = "3.12"
 typeCheckingMode = "strict"
 
+[tool.uv]
+default-groups = [
+  "dev",
+  "docs",
+]
+
+# tool.hatch.version.source is not listed in official schema.
+# https://github.com/ninoseki/uv-dynamic-versioning/issues/21
+
+[tool.uv-dynamic-versioning]
+vcs = "git"
+style = "semver"
+
 [tool.lint.ruff]
 select = [
   "ALL",
 ]
-# ignore = []
 
 [tool.lint.ruff.per-file-ignores]
 "main.py" = [
@@ -94,4 +101,4 @@ test = "pytest --cov=gettake --cov-report=term"
 "test:ci" = "task test --cov-report=xml:cov.xml"
 lint = "pre-commit run -a"
 profile = "python -m cProfile"
-docs = "portray in_browser"
+gendoc = "pdoc gettake -o ./docs"

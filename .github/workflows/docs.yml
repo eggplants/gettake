@@ -7,26 +7,19 @@ on:
 
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       max-parallel: 1
-      matrix:
-        os:
-        - ubuntu-latest
-        python-version:
-        - '3.11'
 
     steps:
     - uses: actions/checkout@v4
-    - uses: actions/setup-python@v5
+    - uses: astral-sh/setup-uv@v5
       with:
-        cache: pip
-        cache-dependency-path: poetry.lock
-        python-version: ${{ matrix.python-version }}
-    - uses: abatilo/actions-poetry@v4
-    - run: poetry install --no-interaction --with docs
-    - run: poetry run portray as_html
+        enable-cache: true
+        cache-dependency-glob: uv.lock
+    - run: uv sync --all-extras --dev
+    - run: uv run task gendoc
     - uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./site
+        publish_dir: ./docs
