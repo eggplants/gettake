@@ -22,6 +22,7 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
   "Topic :: Multimedia :: Graphics",
   "Typing :: Typed",
 ]
@@ -56,6 +57,12 @@ source = "uv-dynamic-versioning"
 sdist.include = [ "gettake" ]
 wheel.include = [ "gettake" ]
 
+[tool.uv]
+default-groups = [
+  "dev",
+  "docs",
+]
+
 [tool.ruff]
 format.indent-style = "space"
 format.quote-style = "double"
@@ -80,12 +87,6 @@ strict = true
 [tool.pyright]
 pythonVersion = "3.12"
 typeCheckingMode = "strict"
-
-[tool.uv]
-default-groups = [
-  "dev",
-  "docs",
-]
 
 [tool.uv-dynamic-versioning]
 vcs = "git"
