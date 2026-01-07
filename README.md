@@ -4,22 +4,10 @@
   <https://badge.fury.io/py/gettake.svg>
   )](
   <https://badge.fury.io/py/gettake>
-) [![Maintainability](
-  <https://qlty.sh/badges/4d764657-5fa2-45b7-b86d-9e9feed55c3e/maintainability.svg>
+) [![CI](
+  <https://github.com/eggplants/gettake/actions/workflows/ci.yml/badge.svg>
   )](
-  <https://qlty.sh/gh/eggplants/projects/gettake>
-) [![pre-commit.ci status](
-  <https://results.pre-commit.ci/badge/github/eggplants/gettake/master.svg>
-  )](
-  <https://results.pre-commit.ci/latest/github/eggplants/gettake/master>
-) [![Code Coverage](
-  <https://qlty.sh/badges/4d764657-5fa2-45b7-b86d-9e9feed55c3e/test_coverage.svg>
-  )](
-  <https://qlty.sh/gh/eggplants/projects/gettake>
-) [![Test](
-  <https://github.com/eggplants/gettake/actions/workflows/test.yml/badge.svg>
-  )](
-  <https://github.com/eggplants/gettake/actions/workflows/test.yml>
+  <https://github.com/eggplants/gettake/actions/workflows/ci.yml>
 )
 
 [![ghcr latest](

@@ -1,20 +1,18 @@
-FROM python:3-slim
+FROM python:3.14-slim
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 
-# docker build -t eggplants/gettake .
-# docker run --rm eggplants/gettake --help
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-ARG VERSION
-ENV VERSION ${VERSION:-master}
+COPY . /app
 
-RUN <<-EOF
-    set -x
-    apt-get update
-    apt-get install -y --no-install-recommends git=1:*
-    apt-get autoremove -qq -y --purge
-    apt-get clean
-    rm -rf /var/lib/apt/lists/*
-    pip install --no-cache-dir git+https://github.com/eggplants/gettake@${VERSION}
-    apt-get purge -y --auto-remove git
-EOF
+ENV UV_COMPILE_BYTECODE=1
+ENV UV_LINK_MODE=copy
+ENV UV_NO_DEV=1
+ENV PYTHONUNBUFFERED=1
 
-ENTRYPOINT ["gettake"]
+WORKDIR /app
+RUN uv sync --locked --no-dev
+
+ENV PATH="/app/.venv/bin:$PATH"
+
+CMD ["uv", "run", "gettake"]
