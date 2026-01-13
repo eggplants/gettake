@@ -27,7 +27,7 @@ classifiers = [
 ]
 dynamic = [ "version" ]
 dependencies = [
-  "pillow>=11.1,<12",
+  "pillow>=11.1,<13",
   "requests>=2.32.3,<3",
 ]
 urls.Documentation = "https://egpl.dev/gettake/"
