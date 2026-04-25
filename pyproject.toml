@@ -52,6 +52,7 @@ build.targets.wheel.include = [ "gettake" ]
 version.source = "uv-dynamic-versioning"
 
 [tool.uv]
+python-downloads = "never"
 default-groups = [
   "dev",
   "docs",
