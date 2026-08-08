@@ -143,7 +143,7 @@ def get_images(opt: Option) -> None:
 
     session = Session()
 
-    session.headers = {"user-agent": _UA}
+    session.headers.update({"user-agent": _UA})
     chapters = __get_chapters(session.get(opt.url.geturl()).text)
     chapters_len = len(chapters)
     print(f"[+] {chapters_len:04} chapter(s) found!")  # noqa: T201
